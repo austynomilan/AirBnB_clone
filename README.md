@@ -9,6 +9,58 @@ A complete web application composed by:
   - A website (the front-end) that shows the final product to everybody: static and dynamic
   - An API that provides a communication interface between the front-end and your data (retrieve, create, delete, update them)
 
+
+# What’s a command interpreter?
+Do you remember the Shell? It’s exactly the same but limited to a specific use-case. In our case, we want to be able to manage the objects of our project:
+
+  - Create a new object (ex: a new User or a new Place)
+  - Retrieve an object from a file, a database etc…
+  - Do operations on objects (count, compute stats, etc…)
+  - Update attributes of an object
+  - Destroy an object
+
+
+# Execution
+
+Your shell should work like this in interactive mode:
+
+```
+$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb) 
+(hbnb) 
+(hbnb) quit
+$
+```
+
+But also in non-interactive mode: (like the Shell project in C)
+
+```
+$ echo "help" | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+```
 # Steps
 ## Each step will link to a concept:
 
