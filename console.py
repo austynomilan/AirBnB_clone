@@ -1,12 +1,15 @@
 #!/usr/bin/python3
-import cmd
+
 import sys
+import cmd
+import re
+from models import *
 
 '''the Console which handles the main program'''
 
 class HBNBCommand(cmd.Cmd):
     '''the command line interpreter'''
-    prompt = 'Airbnb cmd: '
+    prompt = '(hbnb)  '
     intro = "command processor for the Airbnb Enjoy...."
 
     def do_exit(self, line):
@@ -15,7 +18,7 @@ class HBNBCommand(cmd.Cmd):
         sys.exit()
 
     def do_quit(self, line):
-        '''Exit the program'''
+        '''Quit command to exit the program'''
         self.do_exit(line)
 
     def do_EOF(self, line):
