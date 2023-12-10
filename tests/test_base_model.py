@@ -42,3 +42,13 @@ class TestBaseModel_instantiation(unittest.TestCase):
         model.save()
         self.assertNotEqual(model.updated_at, original_updated_at)
         self.assertTrue(model.updated_at > original_updated_at)
+
+    def test_to_dict_method(self):
+        """Test the to_dict method functionality"""
+        model = BaseModel()
+        model_dict = model.to_dict()
+        self.assertIsInstance(model_dict, dict)
+        self.assertIn('__class__', model_dict)
+        self.assertIn('updated_at', model_dict)
+        self.assertIn('create_at', model_dict)
+        self.assertEqual(model_dict['__class__'], 'BaseModel')
