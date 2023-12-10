@@ -34,3 +34,11 @@ class TestBaseModel_instantiation(unittest.TestCase):
         model = BaseModel()
         expected_str = "[BaseModel] ({}) {}".format(model.id, model.__dict__)
         self.assertEqual(model.__str__(), expected_str)
+
+    def test_save_method(self):
+        """Test the save method updates 'updated_at'"""
+        model = BaseModel()
+        original_updated_at = model.updated_at
+        model.save()
+        self.assertNotEqual(model.updated_at, original_updated_at)
+        self.assertTrue(model.updated_at > original_updated_at)
