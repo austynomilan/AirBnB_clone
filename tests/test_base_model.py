@@ -29,3 +29,8 @@ class TestBaseModel_instantiation(unittest.TestCase):
             ['created_at', 'updated_at']
             else datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
 
+    def test_str_method(self):
+        """Test the string representation"""
+        model = BaseModel()
+        expected_str = "[BaseModel] ({}) {}".format(model.id, model.__dict__)
+        self.assertEqual(model.__str__(), expected_str)
