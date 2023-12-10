@@ -52,3 +52,6 @@ class TestBaseModel_instantiation(unittest.TestCase):
         self.assertIn('updated_at', model_dict)
         self.assertIn('create_at', model_dict)
         self.assertEqual(model_dict['__class__'], 'BaseModel')
+
+if __name__ == '__main__':
+    unittest.main()
