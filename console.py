@@ -93,6 +93,17 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("* class doesn't exist *")
 
+    def do_all(self, arg):
+        """Prints all string representation of all instances"""
+        classes = [cls.__name__ for cls in storage.classes.values()]
+
+        if not arg:
+            print([str(instance) for instance in storage.all().values()])
+        elif arg in classes:
+            print([str(instance) for instance in storage.all(arg).values()])
+        else:
+            print("** class doesn't exist **")
+
 
 
 if __name__ == '__main__':
