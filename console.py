@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-
+"""
+HBNBCommand console module
+"""
 import sys
 import cmd
 import re
 from models import *
 
-""" the Console which handles the main program """
-
 
 class HBNBCommand(cmd.Cmd):
-    """ the command line interpreter """
+    """ implementation of HBNBCommand class """
     prompt = "(hbnb) "
 
     def do_quit(self, line):
