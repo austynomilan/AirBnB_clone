@@ -2,10 +2,19 @@
 """
 HBNBCommand console module
 """
-import sys
+
+import json
+from models import storage
 import cmd
 import re
-from models import *
+from models.base_model import BaseModel
+'''from models.user import User
+from models.state import State
+from models.city import City
+from models.review import Review
+from models.amenity import Amenity
+from models.place import Place'''
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -23,6 +32,42 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ when an empty line is entered """
         pass
+    
+    def do_create(self, arg):
+        """Creatd a new instance of BaseModel"""
+        if not arg:
+            print("** class name missing **")
+        else:
+            try:
+                new_instance = getattr(__import__("__main__"), arg)()
+                new_instance.save()
+                print(new_instance.id)
+            except NameError:
+                print("** class doesn't exist **")
+
+    def do_show(self, arg):
+        """print the string reps of an instance"""
+        args = arg.split()
+        if not args:
+            print("** class name is missing **")
+        else:
+            try:
+                class_name = args[0]
+                instance_id = args[1]
+                key = f"{class_name}.{instance_id}"
+                
+                instance = storage.all().get(key)
+
+                if instance:
+                    print(instance)
+                else:
+                    print("* No instance found *")
+
+            except IndexError:
+                print("* Instance id missing *")
+
+            except NameError:
+                print("* class doesnt exist *")
 
 
 if __name__ == '__main__':
