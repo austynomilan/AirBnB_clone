@@ -10,19 +10,15 @@ from models import *
 
 class HBNBCommand(cmd.Cmd):
     """ the command line interpreter """
-    prompt = '(hbnb)  '
-
-    def do_exit(self, line):
-        """ Exit the program """
-        sys.exit()
+    prompt = "(hbnb) "
 
     def do_quit(self, line):
         """ Quit command to exit the program """
-        self.do_exit(line)
+        return True
 
     def do_EOF(self, line):
         """ Exit the program """
-        sys.exit()
+        return True
 
     def emptyline(self):
         """ when an empty line is entered """
