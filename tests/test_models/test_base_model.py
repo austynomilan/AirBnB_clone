@@ -43,7 +43,7 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict_document(self):
         """ Test for to_dict method documentation """
         doc_len = len(BaseModel.to_dict.__doc__)
-        self.asserGreaterEqual(doc_len, 5)
+        self.assertGreaterEqual(doc_len, 5)
 
 
     def test_init_method(self):
@@ -56,8 +56,7 @@ class TestBaseModel(unittest.TestCase):
 
         for key, value in values.items():
             self.assertEqual(getattr(obj, key), value)
-
-        self.assertIsNotNone(obj.id)
+        obj = BaseModel()
         self.assertIsInstance(obj.id, str)
         self.assertIsInstance(obj.created_at, datetime)
         self.assertIsInstance(obj.updated_at, datetime)

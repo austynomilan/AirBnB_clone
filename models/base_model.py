@@ -10,6 +10,7 @@ from datetime import datetime
 class BaseModel:
     """ implementing BaseModel class """
     def __init__(self, *args, **kwargs):
+        """ intialization of BaseModel class """
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
