@@ -11,11 +11,9 @@ from models import *
 class HBNBCommand(cmd.Cmd):
     """ the command line interpreter """
     prompt = '(hbnb)  '
-    intro = "command processor for the Airbnb Enjoy...."
 
     def do_exit(self, line):
         """ Exit the program """
-        print('Exited!')
         sys.exit()
 
     def do_quit(self, line):
@@ -24,8 +22,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """ Exit the program """
-        print('Exited!')
         sys.exit()
+
+    def emptyline(self):
+        """ when an empty line is entered """
+        pass
 
 
 if __name__ == '__main__':
