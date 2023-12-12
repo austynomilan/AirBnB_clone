@@ -106,7 +106,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
-	args = arg.split()
+        args = arg.split()
         if not args:
             print("** class name missing **")
         else:
@@ -125,11 +125,11 @@ class HBNBCommand(cmd.Cmd):
                     return
 
                 if hasattr(instance, attribute_name) and \
-                        attribute_name not in ["id", "created_at", "updated_at"]
+			attribute_name not in ["id", "created_at", "updated_at"]:
                     attribute_type = type(getattr(instance, attribute_name))
                     setattr(instance, attribute_name, attribute_type(attribute_value))
                     instance.save()
-	        else:
+                else:
                     print("** attribute name missing **")
             except IndexError:
                 print("** instance id missing **")
