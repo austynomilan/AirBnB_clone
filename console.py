@@ -104,6 +104,40 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    def do_update(self, arg):
+        """Updates an instance based on the class name and id"""
+	args = arg.split()
+        if not args:
+            print("** class name missing **")
+        else:
+            try:
+                class_name = args[0]
+                instance_id = args[1]
+                attribute_name = args[2]
+                attribute_value = args[3]
+
+                key = f"{class_name}.{instance_id}"
+                instances = storge.all()
+                instance = instances.get(key)
+
+                if not instance:
+                    print("** no instance found **")
+                    return
+
+                if hasattr(instance, attribute_name) and \
+                        attribute_name not in ["id", "created_at", "updated_at"]
+                    attribute_type = type(getattr(instance, attribute_name))
+                    setattr(instance, attribute_name, attribute_type(attribute_value))
+                    instance.save()
+	        else:
+                    print("** attribute name missing **")
+            except IndexError:
+                print("** instance id missing **")
+            except NameError:
+                print("** class doesn't exist **")
+            except ValueError:
+                print("** value missing **")
+
 
 
 if __name__ == '__main__':
