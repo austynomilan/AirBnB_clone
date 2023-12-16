@@ -35,6 +35,7 @@ class HBNBCommand(cmd.Cmd):
     
     def do_create(self, arg):
         """Creatd a new instance of BaseModel"""
+        args.split()
         if not arg:
             print("** class name missing **")
         else:
@@ -56,18 +57,16 @@ class HBNBCommand(cmd.Cmd):
                 instance_id = args[1]
                 key = f"{class_name}.{instance_id}"
                 
-                instance = storage.all().get(key)
+                instance = storage.find_by_id(class_name, instance_id)
 
                 if instance:
                     print(instance)
                 else:
-                    print("* No instance found *")
+                    print("** No instance found **")
 
             except IndexError:
-                print("* Instance id missing *")
+                print("** Instance id missing **")
 
-            except NameError:
-                print("* class doesnt exist *")
 
     def do_destroy(sef, arg):
         """Deletes an instance based on the class name and id"""
@@ -78,20 +77,13 @@ class HBNBCommand(cmd.Cmd):
             try:
                 class_name: args[0]
                 instance_id = args[1]
-                key = f"{class_name}.{instance_id}"
+                
+                storage.delete_by_id(class_name, instance_id)
 
-                instances = storage.all()
-                instance = instance.get(key)
-
-                if instance:
-                    del instance[key]
-                    storage.save()
-                else:
-                    print("no instance found!")
             except IndexError:
-                print("* instance id missing *")
+                print("** instance id missing **")
             except NameError:
-                print("* class doesn't exist *")
+                print("** class doesn't exist **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
