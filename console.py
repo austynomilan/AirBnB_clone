@@ -35,12 +35,12 @@ class HBNBCommand(cmd.Cmd):
     
     def do_create(self, arg):
         """Creatd a new instance of BaseModel"""
-        args.split()
-        if not arg:
+        args = arg.split()
+        if not args:
             print("** class name missing **")
         else:
             try:
-                new_instance = getattr(__import__("__main__"), arg)()
+                new_instance = eval(arg)() 
                 new_instance.save()
                 print(new_instance.id)
             except NameError:
@@ -51,31 +51,38 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if not args:
             print("** class name is missing **")
-        else:
-            try:
-                class_name = args[0]
-                instance_id = args[1]
-                key = f"{class_name}.{instance_id}"
-                
-                instance = storage.find_by_id(class_name, instance_id)
+            return
+        
+        class_name = args[0]
+        classes = [key.split('.')[0] for key in storage.all().keys()]
+        
+        if class_name not in classes:
+            print("** class doesn't exist **")
+            return
 
-                if instance:
-                    print(instance)
-                else:
-                    print("** No instance found **")
+        if len(args) < 2:
+            print("** instance id is missing**")
+            return
+        try:
+            instance_id = args[1]
+            key = f"{class_name}.{instance_id}"         
+            instance = storage.all().get(key)
 
-            except IndexError:
-                print("** Instance id missing **")
-
-
-    def do_destroy(sef, arg):
+            if instance:
+                print(instance)
+            else:
+                print("** No instance found **")
+        except Exception as e:
+            print(f"An error occured: {e}")
+        
+    def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         args = arg.split()
         if not args:
             print("** class name is missing **")
         else:
             try:
-                class_name: args[0]
+                class_name = args[0]
                 instance_id = args[1]
                 
                 storage.delete_by_id(class_name, instance_id)
