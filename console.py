@@ -116,37 +116,51 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
-        if not args:
+
+        if len(args) < 1:
             print("** class name missing **")
+            return
+
+        class_name = args[0]
+        
+        classes = [key.split('.')[0] for key in storage.all().keys()]
+        if class_name not in classes:
+            print("** class doesn't exist **")
+            return
+
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+
+        instance_id = args[1]
+        key = f"{class_name}.{instance_id}"
+        instances = storage.all()
+        instance = instances.get(key)
+
+        if not instance:
+            print("** no instance found **")
+            return
+
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+    
+        attribute_name = args[2]
+
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        attribute_value = args[3]
+
+        if hasattr(instance, attribute_name):
+            attribute_type = type(getattr(instance, attribute_name))
+            casted_value = attribute_type(attribute_value)
+            setattr(instance, attribute_name, casted_value)
+            instance.save()
+            print(f"Attribute {attribute_name} of {class_name} instance {instance_id} updated to {casted_value}.")
         else:
-            try:
-                class_name = args[0]
-                instance_id = args[1]
-                attribute_name = args[2]
-                attribute_value = args[3]
-
-                key = f"{class_name}.{instance_id}"
-                instances = storge.all()
-                instance = instances.get(key)
-
-                if not instance:
-                    print("** no instance found **")
-                    return
-
-                if hasattr(instance, attribute_name) and \
-			attribute_name not in ["id", "created_at", "updated_at"]:
-                    attribute_type = type(getattr(instance, attribute_name))
-                    setattr(instance, attribute_name, attribute_type(attribute_value))
-                    instance.save()
-                else:
-                    print("** attribute name missing **")
-            except IndexError:
-                print("** instance id missing **")
-            except NameError:
-                print("** class doesn't exist **")
-            except ValueError:
-                print("** value missing **")
-
+            print("** attribute doesn't exist **")
 
 
 if __name__ == '__main__':
