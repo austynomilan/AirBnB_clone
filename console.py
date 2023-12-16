@@ -79,27 +79,37 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an instance based on the class name and id"""
         args = arg.split()
         if not args:
-            print("** class name is missing **")
-        else:
-            try:
-                class_name = args[0]
-                instance_id = args[1]
-                
-                storage.delete_by_id(class_name, instance_id)
+            print("** class name missing **")
+            return
 
-            except IndexError:
-                print("** instance id missing **")
-            except NameError:
-                print("** class doesn't exist **")
+        class_name = args[0]
+        classes = [key.split('.')[0] for key in storage.all().keys()]
+        if class_name not in classes:
+            print("** class doesn't exist **")
+            return
+
+        if len(args) < 2:
+           print("** instance id missing **")
+           return
+           
+        instance_id = args[1]
+        key = f"{class_name}.{instance_id}"
+        instances = storage.all()
+
+        if key in instances:
+            del instances[key]
+            storage.save()
+        else:
+            print("** no instance found **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
-        classes = [cls.__name__ for cls in storage.classes.values()]
+        classes = [key.split('.')[0] for key in storage.all().keys()]
 
         if not arg:
             print([str(instance) for instance in storage.all().values()])
         elif arg in classes:
-            print([str(instance) for instance in storage.all(arg).values()])
+            print([str(instance) for key, instance in storage.all().items() if key.startswith(f"{arg}.")])
         else:
             print("** class doesn't exist **")
 
