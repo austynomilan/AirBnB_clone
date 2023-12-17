@@ -153,14 +153,13 @@ class HBNBCommand(cmd.Cmd):
 
         attribute_value = args[3]
 
-        if hasattr(instance, attribute_name):
-            attribute_type = type(getattr(instance, attribute_name))
-            casted_value = attribute_type(attribute_value)
+        try:
+            casted_value = str(attribute_value)
             setattr(instance, attribute_name, casted_value)
             instance.save()
             print(f"Attribute {attribute_name} of {class_name} instance {instance_id} updated to {casted_value}.")
-        else:
-            print("** attribute doesn't exist **")
+        except ValueError:
+            print("** invalid attribute value **")
 
 
 if __name__ == '__main__':
