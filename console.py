@@ -7,6 +7,7 @@ import json
 from models import storage
 import cmd
 import re
+import shlex
 from models.base_model import BaseModel
 '''from models.user import User
 from models.state import State
@@ -32,10 +33,18 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """ when an empty line is entered """
         pass
+
+    def parse_arg(self, arg):
+        '''Parse argument string using shlex to handle double quotes.'''
+        try:
+            return shlex.split(arg)
+        except ValueError as e:
+            print(f"Argument parsing error: {e}")
+            return []
     
     def do_create(self, arg):
         """Creatd a new instance of BaseModel"""
-        args = arg.split()
+        args = self.parse_arg(arg)
         if not args:
             print("** class name missing **")
         else:
@@ -48,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """print the string reps of an instance"""
-        args = arg.split()
+        args = self.parse_arg(arg)
         if not args:
             print("** class name is missing **")
             return
@@ -77,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
         
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        args = arg.split()
+        args = self.parse_arg(arg)
         if not args:
             print("** class name missing **")
             return
@@ -104,18 +113,26 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
-        classes = [key.split('.')[0] for key in storage.all().keys()]
-
-        if not arg:
+        try:
+            args = shlex.split(arg)
+        except ValueError as e:
+            print(f"Argument parsing error: {e}")
+        
+        if not args:
             print([str(instance) for instance in storage.all().values()])
-        elif arg in classes:
-            print([str(instance) for key, instance in storage.all().items() if key.startswith(f"{arg}.")])
+        elif len(args) == 1:
+            class_name = args[0]
+            classes = [key.split('.')[0] for key in storage.all().keys()]
+            if class_name in classes:
+                print([str(instance) for key, instance in storage.all().items() if key.startwith(f"{class_name}.")])
+            else:
+                print("** class doesn't exist **")
         else:
-            print("** class doesn't exist **")
+            prin("** too many argument **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
-        args = arg.split()
+        args = self.parse_arg(arg)
 
         if len(args) < 1:
             print("** class name missing **")
