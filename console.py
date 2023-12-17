@@ -152,6 +152,10 @@ class HBNBCommand(cmd.Cmd):
             return
 
         attribute_value = args[3]
+        
+        if len(args) > 4:
+            print("** only one attribute can be updated at a time **")
+            return
 
         try:
             casted_value = str(attribute_value)
