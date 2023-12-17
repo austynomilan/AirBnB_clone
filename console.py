@@ -48,6 +48,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
         else:
+            class_name = args[0]
             try:
                 new_instance = eval(arg)() 
                 new_instance.save()
@@ -128,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class doesn't exist **")
         else:
-            prin("** too many argument **")
+            print("** too many argument **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
