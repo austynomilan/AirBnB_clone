@@ -43,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
             return []
     
     def do_create(self, arg):
-        """Creatd a new instance of BaseModel"""
+        """Create a new instance of BaseModel"""
         args = self.parse_arg(arg)
         if not args:
             print("** class name missing **")
@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
             class_name = args[0]
             classes = [key.split('.')[0] for key in storage.all().keys()]
             if class_name in classes:
-                print([str(instance) for key, instance in storage.all().items() if key.startwith(f"{class_name}.")])
+                print([str(instance) for key, instance in storage.all().items() if key.startswith(f"{class_name}.")])
             else:
                 print("** class doesn't exist **")
         else:
