@@ -17,19 +17,17 @@ class TestUser(unittest.TestCase):
         doc_len = len(User.__doc__)
         self.assertGreaterEqual(doc_len, 5)
 
-    def test_user(self):
+    def setup(self):
         """Test user attribute initialization"""
+        User.email = "airbnb@email.com"
+        User.password = "Airbnbpass"
+        User.first_name = "Air"
+        User.last_name = "Bnb"
 
-        user = User()
-        user.email = "airbnb@email.com"
-        user.password = "Airbnbpass"
-        user.first_name = "Air"
-        user.last_name = "Bnb"
-
-        self.assertEqual(user.email, "airbnb@email.com")
-        self.assertEqual(user.password, "Airbnbpass")
-        self.assertEqual(user.first_name, "Air")
-        self.assertEqual(user.last_name, "Bnb")
+        self.assertEqual(User.email, "airbnb@email.com")
+        self.assertEqual(User.password, "Airbnbpass")
+        self.assertEqual(User.first_name, "Air")
+        self.assertEqual(User.last_name, "Bnb")
 
 
 if __name__ == '__main__':
