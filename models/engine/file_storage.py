@@ -43,9 +43,24 @@ class FileStorage:
                 objects_dict = json.loads(s)
                 for key, value in objects_dict.items():
                     cls_name = value["__class__"]
+                    from models.amenity import Amenity
                     from models.base_model import BaseModel
+                    from models.city import City
+                    from models.place import Place
+                    from models.review import Review
+                    from models.state import State
                     from models.user import User
                     if cls_name == "User":
                         FileStorage.__objects[key] = User(**value)
+                    elif cls_name == "Place":
+                        FileStoarge.__objects[key] = Place(**value)
+                    elif cls_name == "State":
+                        FileStorage.__objects[key] = State(**value)
+                    elif cls_name == "City":
+                        FileStorage.__objects[key] = City(**value)
+                    elif cls_name == "Amenity":
+                        FileStorage.__objects[key] = Amenity(**value)
+                    elif cls_name == "Review":
+                        FileStorage.__objects[key] = Review(**value)
                     else:
                         FileStorage.__objects[key] = BaseModel(**value)
