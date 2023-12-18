@@ -40,11 +40,11 @@ class FileStorage:
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 s = f.read()
                 objects_dict = json.loads(s)
-                from models.base_model import BaseModel
-                from models.user import User
                 for key, value in objects_dict.items():
                     cls_name = value["__class__"]
+                    from models.base_model import BaseModel
+                    from models.user import User
                     if cls_name == "User":
-                        FileStorage.__object[key] = User(**value)
+                        FileStorage.__objects[key] = User(**value)
                     else:
                         FileStorage.__objects[key] = BaseModel(**value)
