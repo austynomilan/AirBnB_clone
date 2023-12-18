@@ -43,7 +43,7 @@ class FileStorage:
                 from models.base_model import BaseModel
                 from models.user import User
                 for key, value in objects_dict.items():
-                    cls_name = value["__class__"]i
+                    cls_name = value["__class__"]
                     if cls_name == "User":
                         FileStorage.__object[key] = User(**value)
                     else:
