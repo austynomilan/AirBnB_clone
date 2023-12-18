@@ -45,7 +45,6 @@ class TestBaseModel(unittest.TestCase):
         doc_len = len(BaseModel.to_dict.__doc__)
         self.assertGreaterEqual(doc_len, 5)
 
-
     def test_init_method(self):
         """ Test the init method """
         values = {
@@ -60,7 +59,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(obj.id, str)
         self.assertIsInstance(obj.created_at, datetime)
         self.assertIsInstance(obj.updated_at, datetime)
-
 
     def test_str_method(self):
         """Test the string representation"""
