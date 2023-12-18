@@ -19,11 +19,11 @@ class TestUser(unittest.TestCase):
 
     def setup(self):
         """Test user attribute initialization"""
-
-        self.assertEqual(User.email, "")
-        self.assertEqual(User.password, "")
-        self.assertEqual(User.first_name, "")
-        self.assertEqual(User.last_name, "")
+        user = User()
+        self.assertEqual(user.email, "")
+        self.assertEqual(user.password, "")
+        self.assertEqual(user.first_name, "")
+        self.assertEqual(user.last_name, "")
 
 
 if __name__ == '__main__':

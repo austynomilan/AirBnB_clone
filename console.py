@@ -17,7 +17,6 @@ from models.amenity import Amenity
 from models.place import Place
 
 
-
 class HBNBCommand(cmd.Cmd):
     """ implementation of HBNBCommand class """
     prompt = "(hbnb) "
@@ -41,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         except ValueError as e:
             print(f"Argument parsing error: {e}")
             return []
-    
+
     def do_create(self, arg):
         """Create a new instance of BaseModel"""
         args = self.parse_arg(arg)
@@ -50,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             class_name = args[0]
             try:
-                new_instance = eval(arg)() 
+                new_instance = eval(arg)()
                 new_instance.save()
                 print(new_instance.id)
             except NameError:
@@ -62,10 +61,10 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name is missing **")
             return
-        
+
         class_name = args[0]
         classes = [key.split('.')[0] for key in storage.all().keys()]
-        
+
         if class_name not in classes:
             print("** class doesn't exist **")
             return
@@ -75,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
             return
         try:
             instance_id = args[1]
-            key = f"{class_name}.{instance_id}"         
+            key = f"{class_name}.{instance_id}"
             instance = storage.all().get(key)
 
             if instance:
@@ -84,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** No instance found **")
         except Exception as e:
             print(f"An error occured: {e}")
-        
+
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         args = self.parse_arg(arg)
@@ -99,9 +98,9 @@ class HBNBCommand(cmd.Cmd):
             return
 
         if len(args) < 2:
-           print("** instance id missing **")
-           return
-           
+            print("** instance id missing **")
+            return
+
         instance_id = args[1]
         key = f"{class_name}.{instance_id}"
         instances = storage.all()
@@ -118,14 +117,17 @@ class HBNBCommand(cmd.Cmd):
             args = shlex.split(arg)
         except ValueError as e:
             print(f"Argument parsing error: {e}")
-        
+
         if not args:
             print([str(instance) for instance in storage.all().values()])
         elif len(args) == 1:
             class_name = args[0]
             classes = [key.split('.')[0] for key in storage.all().keys()]
             if class_name in classes:
-                print([str(instance) for key, instance in storage.all().items() if key.startswith(f"{class_name}.")])
+                print([str(instance)
+                       for key, instance in storage.all().items()
+                       if key.startswith(f"{class_name}.")
+                       ])
             else:
                 print("** class doesn't exist **")
         else:
@@ -140,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        
+
         classes = [key.split('.')[0] for key in storage.all().keys()]
         if class_name not in classes:
             print("** class doesn't exist **")
@@ -162,7 +164,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 3:
             print("** attribute name missing **")
             return
-    
+
         attribute_name = args[2]
 
         if len(args) < 4:
@@ -170,7 +172,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         attribute_value = args[3]
-        
+
         if len(args) > 4:
             print("** only one attribute can be updated at a time **")
             return
@@ -179,7 +181,8 @@ class HBNBCommand(cmd.Cmd):
             casted_value = str(attribute_value)
             setattr(instance, attribute_name, casted_value)
             instance.save()
-            print(f"Attribute {attribute_name} of {class_name} instance {instance_id} updated to {casted_value}.")
+            print(f"Attribute {attribute_name} of {class_name} instance "
+                  f"{instance_id} updated to {casted_value}.")
         except ValueError:
             print("** invalid attribute value **")
 
