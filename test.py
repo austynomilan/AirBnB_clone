@@ -6,6 +6,7 @@ import io
 import sys
 
 import console
+
 """
  Create console
 """
@@ -35,7 +36,7 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
 model_id = "not_found"
 
-result = exec_command(my_console, "show Amenity {}".format(model_id))
+result = exec_command(my_console, "show Place {}".format(model_id))
 if result is None or result == "":
     print("FAIL: no output")
     

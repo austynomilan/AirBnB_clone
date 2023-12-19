@@ -5,7 +5,48 @@ import cmd
 import io
 import sys
 
+import shutil
+
+"""
+ Cleanup file storage
+"""
+import os
+file_path = "file.json"
+if not os.path.exists(file_path):
+    try:
+        from models.engine.file_storage import FileStorage
+        file_path = FileStorage._FileStorage__file_path
+    except:
+        pass
+if os.path.exists(file_path):
+    os.remove(file_path)
+
+
+"""
+ Backup console file
+"""
+if os.path.exists("tmp_console_main.py"):
+    shutil.copy("tmp_console_main.py", "console.py")
+shutil.copy("console.py", "tmp_console_main.py")
+
+"""
+ Updating console to remove "__main__"
+"""
+with open("tmp_console_main.py", "r") as file_i:
+    console_lines = file_i.readlines()
+    with open("console.py", "w") as file_o:
+        in_main = False
+        for line in console_lines:
+            if "__main__" in line:
+                in_main = True
+            elif in_main:
+                if "cmdloop" not in line:
+                    file_o.write(line.lstrip("    ")) 
+            else:
+                file_o.write(line)
+
 import console
+
 """
  Create console
 """
@@ -33,9 +74,13 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-model_id = "not_found"
+result = exec_command(my_console, "create Place")
+if result is None or result == "":
+    print("FAIL: No ID retrieved")
+    
+model_id = result
 
-result = exec_command(my_console, "show City {}".format(model_id))
+result = exec_command(my_console, "destroy City {}".format(model_id))
 if result is None or result == "":
     print("FAIL: no output")
     
@@ -43,4 +88,6 @@ search_str = "** no instance found **"
 if result != search_str:
     print("FAIL: wrong output \"{}\" instead of \"{}\"".format(result, search_str))
     
-print("OK")
+print("OK", end="")
+
+shutil.copy("tmp_console_main.py", "console.py")
