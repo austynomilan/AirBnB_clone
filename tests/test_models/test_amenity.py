@@ -17,5 +17,6 @@ class TestAmenity(unittest.TestCase):
         attr = Amenity()
         self.assertEqual(attr.name, "")
 
+
 if __name__ == '__main__':
     unittest.main()

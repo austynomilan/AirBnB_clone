@@ -18,5 +18,6 @@ class TestCity(unittest.TestCase):
         self.assertEqual(attr.state_id, "")
         self.assertEqual(attr.name, "")
 
+
 if __name__ == '__main__':
     unittest.main()

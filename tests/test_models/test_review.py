@@ -19,5 +19,6 @@ class TestReview(unittest.TestCase):
         self.assertEqual(attr.user_id, "")
         self.assertEqual(attr.text, "")
 
+
 if __name__ == '__main__':
     unittest.main()

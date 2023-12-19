@@ -3,9 +3,13 @@
 test_file_storage module
 """
 import models
+import json
+import os
+import tempfile
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from unittest import TestCase
+from unittest.mock import patch, mock_open
 
 
 class TestFileStorage(TestCase):
@@ -70,14 +74,31 @@ class TestFileStorage(TestCase):
 
         file_storage = FileStorage()
         file_storage.__objects = test_objects
-        file_storage.__file_path = 'test_file.json'
+        file_storage.__file_path = 'file.json'
         file_storage.save()
+
+        try:
+            with tempfile.NamedTemporaryFile(
+                    mode='w',
+                    delete=False
+                    ) as temp_file:
+                json.dump(test_objects, temp_file)
+                temp_file_path = temp_file.name
+
+            with open(temp_file_path, 'r') as file:
+                json_content = json.load(file)
+
+            self.assertEqual(json_content, test_objects)
+        finally:
+            if temp_file_path:
+                os.remove(temp_file_path)
 
     def test_reload_method(self):
         """ Test for reload() method """
         file_storage = FileStorage()
-        file_storage._FileStorage__file_path = 'test_file.json'
+        file_storage.__file_path = 'test_file.json'
         file_storage.reload()
+        self.assertEqual(file_storage.__file_path, 'test_file.json')
 
 
 if __name__ == '__main__':

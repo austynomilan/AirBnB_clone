@@ -17,5 +17,6 @@ class TestState(unittest.TestCase):
         attr = State()
         self.assertEqual(attr.name, "")
 
+
 if __name__ == '__main__':
     unittest.main()
