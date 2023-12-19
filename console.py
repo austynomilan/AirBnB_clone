@@ -59,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         """print the string reps of an instance"""
         args = self.parse_arg(arg)
         if not args:
-            print("** class name is missing **")
+            print("** class name missing **")
             return
 
         class_name = args[0]
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         if len(args) < 2:
-            print("** instance id is missing **")
+            print("** instance id missing **")
             return
         try:
             instance_id = args[1]
@@ -80,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
             if instance:
                 print(instance)
             else:
-                print("** No instance found **")
+                print("** no instance found **")
         except Exception as e:
             print(f"An error occured: {e}")
 
