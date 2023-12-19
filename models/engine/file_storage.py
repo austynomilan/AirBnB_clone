@@ -52,7 +52,7 @@ class FileStorage:
                     if cls_name == "User":
                         FileStorage.__objects[key] = User(**value)
                     elif cls_name == "Place":
-                        FileStoarge.__objects[key] = Place(**value)
+                        FileStorage.__objects[key] = Place(**value)
                     elif cls_name == "State":
                         FileStorage.__objects[key] = State(**value)
                     elif cls_name == "City":
