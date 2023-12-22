@@ -143,5 +143,5 @@ class TestHBNBCommand(TestCase):
         self.assertTrue(f.getvalue().strip())
 
 
-if __name__ == '__main--':
+if __name__ == '__main__':
     unittest.main()
