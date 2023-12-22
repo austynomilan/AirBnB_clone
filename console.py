@@ -8,6 +8,7 @@ from models import storage
 import cmd
 import re
 import shlex
+from ast import literal_eval
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -185,6 +186,140 @@ class HBNBCommand(cmd.Cmd):
                   f"{instance_id} updated to {casted_value}.")
         except ValueError:
             print("** invalid attribute value **")
+
+    def default(self, arg):
+        """ Handle arbitrary input """
+
+        try:
+            class_name, method_call = arg.split(".", 1)
+
+            """ handles show() command """
+            if method_call.startswith("show(") and method_call.endswith(")"):
+                instance_id = method_call[6:-2]
+                key = f"{class_name}.{instance_id}"
+                instances = storage.all()
+                instance = instances.get(key)
+                classes = [key.split('.')[0] for key in storage.all().keys()]
+                if class_name in classes:
+                    if instance:
+                        print(instance)
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** class doesn't exist **")
+            elif method_call.startswith("all(") and method_call.endswith(")"):
+                """ handles all() command """
+
+                classes = [key.split('.')[0] for key in storage.all().keys()]
+                if class_name in classes:
+                    print([str(instance)
+                           for key, instance in storage.all().items()
+                           if key.startswith(f"{class_name}.")
+                           ])
+                else:
+                    print("** class doesn't exist **")
+            elif method_call.startswith("destroy(")
+            and method_call.endswith(")"):
+                """ handles destroy() command """
+
+                instance_id = method_call[9:-2]
+                key = f"{class_name}.{instance_id}"
+                instances = storage.all()
+                instance = instances.get(key)
+                classes = [key.split('.')[0] for key in storage.all().keys()]
+
+                if class_name in classes:
+                    if key in instances:
+                        del instances[key]
+                        storage.save()
+                    else:
+                        print("** no instance found **")
+                else:
+                    print("** class doesn't exist **")
+            elif method_call.startswith("update(")
+            and method_call.endswith(")"):
+                """ handles update() command """
+
+                getArg = method_call[7:-1]
+                getParam = [arg.strip(' "\'') for arg in getArg.split(',', 2)]
+                """getParam = [arg for arg in getArg.split(',', 1)]"""
+                classes = [key.split('.')[0] for key in storage.all().keys()]
+                if "{" in getArg and "}" in getArg:
+                    print("Dictionary is present")
+                if class_name not in classes:
+                    print("** class doesn't exist **")
+                    return
+
+                if len(getParam) < 1:
+                    print("** instance id is missing **")
+                    return
+
+                instance_id = getParam[0]
+                key = f"{class_name}.{instance_id}"
+                instances = storage.all()
+                instance = instances.get(key)
+
+                if not instance:
+                    print("** instance not found **")
+                    return
+
+                if "{" in getArg and "}" in getArg:
+                    comma_index = getArg.index(',')
+
+                    instance_id = getArg[:comma_index].strip(' "\'')
+                    dicts = getArg[comma_index + 1:].strip()
+                    my_dict = literal_eval(dicts)
+                    for key, value in my_dict.items():
+                        casted_value = str(value)
+                        setattr(instance, key, casted_value)
+                        instance.save()
+                        """print(f"Attribute {attr_name} of "
+                                f"{class_name} instance "
+                                 f"{instance_id} updated "
+                                 f"to {casted_value}.")"""
+                    return
+
+                if len(getParam) < 2:
+                    print("** attribute name missing **")
+                    return
+
+                attr_name = getParam[1]
+
+                if len(getParam) < 3:
+                    print("** value missing **")
+                    return
+
+                attr_value = getParam[2]
+
+                if len(getParam) > 3:
+                    print("** only one attribute can be updated at a time **")
+                    return
+                try:
+                    casted_value = str(attr_value)
+                    setattr(instance, attr_name, casted_value)
+                    instance.save()
+                    """print(f"Attribute {attr_name} of {class_name} instance "
+                            f"{instance_id} updated to {casted_value}.")"""
+                except ValueError:
+                    print("** invalid attribute value **")
+            elif method_call.startswith("count(")
+            and method_call.endswith(")"):
+                """ handles count() command """
+                classes = [key.split('.')[0] for key in storage.all().keys()]
+                instances = storage.all()
+                if class_name in classes:
+                    instance_count = 0
+                    for className in storage.all():
+                        if className.split('.')[0] == class_name:
+                            instance_count += 1
+                    print("{}".format(instance_count))
+                else:
+                    print("** class doesn't exist **")
+                    return
+            else:
+                print("*** Unknown command: {}".format(arg))
+        except Exception as e:
+            print(f"An error occured: {e}")
 
 
 if __name__ == '__main__':
