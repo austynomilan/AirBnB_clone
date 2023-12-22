@@ -185,7 +185,11 @@ class HBNBCommand(cmd.Cmd):
             key = f"{class_name}.{instance_id}"
             instances = storage.all()
             instance = instances.get(key)
-            classes = [key.split('.')[0] for key in storage.all().keys()]
+            classes = [
+                    "BaseModel", "User", "State",
+                    "Review", "Place", "City",
+                    "Amenity"
+                    ]
             if class_name in classes:
                 if instance:
                     print(instance)
@@ -247,7 +251,7 @@ class HBNBCommand(cmd.Cmd):
                 key = f"{class_name}.{instance_id}"
                 instances = storage.all()
                 instance = instances.get(key)
-                if not instance:
+                if key not in instances.keys():
                     print("** no instance found **")
                 elif "{" in getArg and "}" in getArg:
                     comma_index = getArg.index(',')
@@ -288,7 +292,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
         else:
             print("*** Unknown command: {}".format(arg))
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

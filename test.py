@@ -4,6 +4,44 @@ import io
 import sys
 import cmd
 import console
+import shutil
+
+"""
+ Cleanup file storage
+"""
+import os
+file_path = "file.json"
+if not os.path.exists(file_path):
+    try:
+        from models.engine.file_storage import FileStorage
+        file_path = FileStorage._FileStorage__file_path
+    except:
+        pass
+if os.path.exists(file_path):
+    os.remove(file_path)
+
+"""
+ Backup console file
+"""
+if os.path.exists("tmp_console_main.py"):
+    shutil.copy("tmp_console_main.py", "console.py")
+shutil.copy("console.py", "tmp_console_main.py")
+
+"""
+ Updating console to remove "__main__"
+"""
+with open("tmp_console_main.py", "r") as file_i:
+    console_lines = file_i.readlines()
+    with open("console.py", "w") as file_o:
+        in_main = False
+        for line in console_lines:
+            if "__main__" in line:
+                in_main = True
+            elif in_main:
+                if "cmdloop" not in line:
+                    file_o.write(line.lstrip("    ")) 
+            else:
+                file_o.write(line)
 
 """
  Create console
@@ -39,14 +77,14 @@ result = exec_command(my_console, "{}.update(\"{}\", \"{}\", \"{}\")".format(mod
 is_error = False
 if result is None or result == "":
     pass  
-elif result == "** no instance found *":
+elif result == "** no instance found **":
     is_error = True
 
 if not is_error:
     result = exec_command(my_console, "{}.update({}, \"{}\", \"{}\")".format(model_class, model_id, attribute_name, attribute_value))
     if result is None or result == "":
         pass  
-    elif result == "** no instance found *":
+    elif result == "** no instance found **":
         is_error = True
 
 if not is_error:
