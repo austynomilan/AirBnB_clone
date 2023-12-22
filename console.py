@@ -45,16 +45,21 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """Create a new instance of BaseModel"""
         args = self.parse_arg(arg)
+        classes = [
+                "BaseModel", "User", "State",
+                "Review", "Place", "City",
+                "Amenity"
+                ]
+        class_name = args[0]
         if not args:
             print("** class name missing **")
+        elif class_name not in classes:
+             print("** class doesn't exist **")
         else:
             class_name = args[0]
-            try:
-                new_instance = eval(arg)()
-                new_instance.save()
-                print(new_instance.id)
-            except NameError:
-                print("** class doesn't exist **")
+            new_instance = eval(arg)()
+            new_instance.save()
+            print(new_instance.id)
 
     def do_show(self, arg):
         """print the string reps of an instance"""
@@ -64,26 +69,24 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        classes = [key.split('.')[0] for key in storage.all().keys()]
+        classes = [
+                "BaseModel", "User", "State",
+                "Review", "Place", "City",
+                "Amenity"
+                ]
 
         if class_name not in classes:
             print("** class doesn't exist **")
-            return
-
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-        try:
+        else:
             instance_id = args[1]
             key = f"{class_name}.{instance_id}"
             instance = storage.all().get(key)
-
             if instance:
                 print(instance)
             else:
                 print("** no instance found **")
-        except Exception as e:
-            print(f"An error occured: {e}")
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
@@ -93,24 +96,24 @@ class HBNBCommand(cmd.Cmd):
             return
 
         class_name = args[0]
-        classes = [key.split('.')[0] for key in storage.all().keys()]
+        classes = [
+                "BaseModel", "User", "State",
+                "Review", "Place", "City",
+                "Amenity"
+                ]
         if class_name not in classes:
             print("** class doesn't exist **")
-            return
-
-        if len(args) < 2:
+        elif len(args) < 2:
             print("** instance id missing **")
-            return
-
-        instance_id = args[1]
-        key = f"{class_name}.{instance_id}"
-        instances = storage.all()
-
-        if key in instances:
-            del instances[key]
-            storage.save()
         else:
-            print("** no instance found **")
+            instance_id = args[1]
+            key = f"{class_name}.{instance_id}"
+            instances = storage.all()
+            if key in instances:
+                del instances[key]
+                storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
@@ -123,7 +126,11 @@ class HBNBCommand(cmd.Cmd):
             print([str(instance) for instance in storage.all().values()])
         elif len(args) == 1:
             class_name = args[0]
-            classes = [key.split('.')[0] for key in storage.all().keys()]
+            classes = [
+                    "BaseModel", "User", "State",
+                    "Review", "Place", "City",
+                    "Amenity"
+                    ]
             if class_name in classes:
                 print([str(instance)
                        for key, instance in storage.all().items()
@@ -138,7 +145,11 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id"""
         args = self.parse_arg(arg)
         class_name = args[0]
-        classes = [key.split('.')[0] for key in storage.all().keys()]
+        classes = [
+                "BaseModel", "User", "State",
+                "Review", "Place", "City",
+                "Amenity"
+                ]
         if len(args) < 1:
             print("** class name missing **")
         elif class_name not in classes:
@@ -185,7 +196,11 @@ class HBNBCommand(cmd.Cmd):
         elif method_call.startswith("all(") and method_call.endswith(")"):
             """ handles all() command """
 
-            classes = [key.split('.')[0] for key in storage.all().keys()]
+            classes = [
+                    "BaseModel", "User", "State",
+                    "Review", "Place", "City",
+                    "Amenity"
+                    ]
             if class_name in classes:
                 print([str(instance)
                         for key, instance in storage.all().items()
@@ -200,7 +215,11 @@ class HBNBCommand(cmd.Cmd):
             key = f"{class_name}.{instance_id}"
             instances = storage.all()
             instance = instances.get(key)
-            classes = [key.split('.')[0] for key in storage.all().keys()]
+            classes = [
+                    "BaseModel", "User", "State",
+                    "Review", "Place", "City",
+                    "Amenity"
+                    ]
 
             if class_name in classes:
                 if key in instances:
@@ -214,7 +233,11 @@ class HBNBCommand(cmd.Cmd):
             """ handles update() command """
             getArg = method_call[7:-1]
             getParam = [arg.strip(' "\'') for arg in getArg.split(',', 2)]
-            classes = [key.split('.')[0] for key in storage.all().keys()]
+            classes = [
+                    "BaseModel", "User", "State",
+                    "Review", "Place", "City",
+                    "Amenity"
+                    ]
             if class_name not in classes:
                 print("** class doesn't exist **")
             elif len(getParam) < 1:
@@ -249,7 +272,11 @@ class HBNBCommand(cmd.Cmd):
                     instance.save()
         elif method_call.startswith("count("):
             """ handles count() command """
-            classes = [key.split('.')[0] for key in storage.all().keys()]
+            classes = [
+                    "BaseModel", "User", "State",
+                    "Review", "Place", "City",
+                    "Amenity"
+                    ]
             instances = storage.all()
             if class_name in classes:
                 instance_count = 0

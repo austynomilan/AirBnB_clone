@@ -30,9 +30,6 @@ def exec_command(my_console, the_command, last_lines = 1):
     lines = my_console.stdout.getvalue().split("\n")
     return "\n".join(lines[(-1*(last_lines+1)):-1])
 
-"""
- Tests
-"""
 model_class = "BaseModel"
 model_id = "Nop"
 attribute_name = "attribute_name"
@@ -42,14 +39,14 @@ result = exec_command(my_console, "{}.update(\"{}\", \"{}\", \"{}\")".format(mod
 is_error = False
 if result is None or result == "":
     pass  
-elif result == "** no instance found **":
+elif result == "** no instance found *":
     is_error = True
 
 if not is_error:
     result = exec_command(my_console, "{}.update({}, \"{}\", \"{}\")".format(model_class, model_id, attribute_name, attribute_value))
     if result is None or result == "":
         pass  
-    elif result == "** no instance found **":
+    elif result == "** no instance found *":
         is_error = True
 
 if not is_error:
@@ -63,10 +60,10 @@ if not is_error:
     result = exec_command(my_console, "{}.update({}.{}, \"{}\", \"{}\")".format(model_class, model_class, model_id, attribute_name, attribute_value))
     if result is None or result == "":
         pass  
-    elif result == "** no instance found *":
+    elif result == "** no instance found **":
         is_error = True
 
 if not is_error:
     print("FAIL: not found")
-    
-print("OK", end="")
+
+print("OK")
