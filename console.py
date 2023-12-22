@@ -258,7 +258,7 @@ class HBNBCommand(cmd.Cmd):
                 instance = instances.get(key)
 
                 if not instance:
-                    print("** instance not found **")
+                    print("** no instance found **")
                     return
 
                 if "{" in getArg and "}" in getArg:
