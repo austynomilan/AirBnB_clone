@@ -54,6 +54,94 @@ class TestHBNBCommand(TestCase):
             HBNBCommand().onecmd("create BaseModel")
         self.assertTrue(f.getvalue().strip())
 
+    def tes_show_BaseModel(self):
+        """
+        testing show BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            HBNBCommand().onecmd("show BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_destroy_BaseModel(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_all_BaseModel(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_update_BaseModel(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_BaseModel_all(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_Review_all(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_User_all(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_State_all(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_City_all(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_Amenity_all(Self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
+    def test_Place_All(self):
+        """
+        testing destroy BaseModel command
+        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
+
 
 if __name__ == '__main--':
     unittest.main()
