@@ -218,8 +218,7 @@ class HBNBCommand(cmd.Cmd):
                            ])
                 else:
                     print("** class doesn't exist **")
-            elif method_call.startswith("destroy(")
-            and method_call.endswith(")"):
+            elif method_call.startswith("destroy("):
                 """ handles destroy() command """
 
                 instance_id = method_call[9:-2]
@@ -236,8 +235,7 @@ class HBNBCommand(cmd.Cmd):
                         print("** no instance found **")
                 else:
                     print("** class doesn't exist **")
-            elif method_call.startswith("update(")
-            and method_call.endswith(")"):
+            elif method_call.startswith("update("):
                 """ handles update() command """
 
                 getArg = method_call[7:-1]
@@ -302,8 +300,7 @@ class HBNBCommand(cmd.Cmd):
                             f"{instance_id} updated to {casted_value}.")"""
                 except ValueError:
                     print("** invalid attribute value **")
-            elif method_call.startswith("count(")
-            and method_call.endswith(")"):
+            elif method_call.startswith("count("):
                 """ handles count() command """
                 classes = [key.split('.')[0] for key in storage.all().keys()]
                 instances = storage.all()
