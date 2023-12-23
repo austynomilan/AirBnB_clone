@@ -72,44 +72,40 @@ class TestHBNBCommand(TestCase):
 
     def test_all_BaseModel(self):
         """
-        testing destroy BaseModel command
+        testing all BaseModel command
         """
         with patch('sys.stdout', new=io.StringIO()) as f:
-            result = HBNBCommand().onecmd("destroy BaseModel")
+            result = HBNBCommand().onecmd("all BaseModel")
         self.assertTrue(f.getvalue().strip())
 
     def test_update_BaseModel(self):
         """
-        testing destroy BaseModel command
+        testing update BaseModel command
         """
         with patch('sys.stdout', new=io.StringIO()) as f:
-            result = HBNBCommand().onecmd("destroy BaseModel")
+            result = HBNBCommand().onecmd("update BaseModel")
         self.assertTrue(f.getvalue().strip())
 
     def test_BaseModel_all(self):
         """
-        testing destroy BaseModel command
+        testing BaseModel.all() command
         """
-        with patch('sys.stdout', new=io.StringIO()) as f:
-            result = HBNBCommand().onecmd("destroy BaseModel")
-        self.assertTrue(f.getvalue().strip())
+        all_instances = BaseModel.all()
+        self.assertIn(BaseModel(), all_instances)
 
     def test_Review_all(self):
         """
-        testing destroy BaseModel command
+        testing Review.all() command
         """
-        with patch('sys.stdout', new=io.StringIO()) as f:
-            result = HBNBCommand().onecmd("destroy BaseModel")
-        self.assertTrue(f.getvalue().strip())
+        all_instances = Review.all()
+        self.assertIn(Review(), all_instances)
 
     def test_User_all(self):
         """
-        testing destroy BaseModel command
+        testing User.all() command
         """
-        with patch('sys.stdout', new=io.StringIO()) as f:
-            result = HBNBCommand().onecmd("destroy BaseModel")
-        self.assertTrue(f.getvalue().strip())
-
+        all_instances = User.all()
+        self.assertIn(User(), all_instances)
     def test_State_all(self):
         """
         testing destroy BaseModel command
