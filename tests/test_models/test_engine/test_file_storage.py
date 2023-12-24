@@ -75,7 +75,8 @@ class TestFileStorage(TestCase):
         file_storage = FileStorage()
         file_storage.__objects = test_objects
         file_storage.__file_path = 'file.json'
-        file_storage.save()
+        save_inst = file_storage.save()
+        self.assertFalse(save_inst)
 
         try:
             with tempfile.NamedTemporaryFile(
@@ -97,8 +98,8 @@ class TestFileStorage(TestCase):
         """ Test for reload() method """
         file_storage = FileStorage()
         file_storage.__file_path = 'test_file.json'
-        file_storage.reload()
-        self.assertEqual(file_storage.__file_path, 'test_file.json')
+        reload_inst = file_storage.reload()
+        self.assertFalse(reload_inst)
 
 
 if __name__ == '__main__':
