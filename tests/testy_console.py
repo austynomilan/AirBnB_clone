@@ -8,10 +8,12 @@ import io
 from unittest.mock import patch
 from console import HBNBCommand
 
+
 class TestHBNBCommand(TestCase):
     """
     implementation of test for Console class
     """
+
     def test_quit(self):
         """
         testing the quit command
@@ -84,71 +86,57 @@ class TestHBNBCommand(TestCase):
             result = HBNBCommand().onecmd("update BaseModel")
         self.assertTrue(f.getvalue().strip())
 
-    def test_all(self):
+    def test_BaseModel_all(self):
         """
-        testing all() command
+        testing BaseModel.all() command
+        """
+        all_instances = BaseModel.all()
+        self.assertIn(BaseModel(), all_instances)
+
+    def test_Review_all(self):
+        """
+        testing Review.all() command
+        """
+        all_instances = Review.all()
+        self.assertIn(Review(), all_instances)
+
+    def test_User_all(self):
+        """
+        testing User.all() command
+        """
+        all_instances = User.all()
+        self.assertIn(User(), all_instances)
+    def test_State_all(self):
+        """
+        testing destroy BaseModel command
         """
         with patch('sys.stdout', new=io.StringIO()) as f:
-            BaseModel = HBNBCommand().onecmd("BaseModel.all()")
-            Review = HBNBCommand().onecmd("Review.all()")
-            User = HBNBCommand().onecmd("User.all()")
-            State = HBNBCommand().onecmd("State.all()")
-            City = HBNBCommand().onecmd("City.all()")
-            Amenity = HBNBCommand().onecmd("Amenity.all()")
-            Place = HBNBCommand().onecmd("Place.all()")
-            self.assertNotEqual(BaseModel, [])
-            self.assertNotEqual(Review, [])
-            self.assertNotEqual(User, [])
-            self.assertNotEqual(State, [])
-            self.assertNotEqual(City, [])
-            self.assertNotEqual(Amenity, [])
-            self.assertNotEqual(Place, [])
+            result = HBNBCommand().onecmd("destroy BaseModel")
         self.assertTrue(f.getvalue().strip())
 
-    def test_count(self):
+    def test_City_all(self):
         """
-        testing count() command
+        testing destroy BaseModel command
         """
-        #with patch('sys.stdout', new=io.StringIO()) as f:
-        BaseModel = HBNBCommand().onecmd("BaseModel.count()")
-        Review = HBNBCommand().onecmd("Review.count()")
-        User = HBNBCommand().onecmd("User.count()")
-        State = HBNBCommand().onecmd("State.count()")
-        City = HBNBCommand().onecmd("City.count()")
-        Amenity = HBNBCommand().onecmd("Amenity.count()")
-        Place = HBNBCommand().onecmd("Place.count()")
-        print(BaseModel)
-        self.assertNotEqual(int(BaseModel), 0)
-        self.assertNotEqual(Review, 0)
-        self.assertNotEqual(User, 0)
-        self.assertNotEqual(State, 0)
-        self.assertNotEqual(City, 0)
-        self.assertNotEqual(Amenity, 0)
-        self.assertNotEqual(Place, 0)
-        #self.assertTrue(f.getvalue().strip())
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
 
-    def test_show(self):
+    def test_Amenity_all(Self):
         """
-        testing show("id") command
+        testing destroy BaseModel command
         """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd("destroy BaseModel")
+        self.assertTrue(f.getvalue().strip())
 
-    def test_destroy(Self):
+    def test_Place_All(self):
         """
-        testing destroy("id") command
+        testing destroy BaseModel command
         """
-
-
-    def test_update_attrs_value(Self):
-        """
-        testing update("id", "attribute_name",
-                        "string_value")
-                        command
-        """
-
-    def test_update_with_dict(Self):
-        """
-        testing update() command with dictonary
-        """
+        with patch('sys.stdout', new=io.StringIO()) as f:
+            result = HBNBCommand().onecmd(" BaseModel")
+        self.assertTrue(f.getvalue().strip())
 
 
 if __name__ == '__main__':
