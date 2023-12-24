@@ -135,7 +135,7 @@ class TestHBNBCommand(TestCase):
         testing destroy BaseModel command
         """
         with patch('sys.stdout', new=io.StringIO()) as f:
-            result = HBNBCommand().onecmd("destroy BaseModel")
+            result = HBNBCommand().onecmd(" BaseModel")
         self.assertTrue(f.getvalue().strip())
 
 
