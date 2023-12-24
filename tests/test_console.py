@@ -240,6 +240,55 @@ class TestHBNBCommand(TestCase):
         all_instances = Place.show()
         self.assertIn(Place(), all_instances)
         
+    def test_BaseModel_destroy(self):
+        """
+        testing BaseModel.destroy() commandd
+        """
+        all_instances = BaseModel.destroy()
+        self.assertIn(BaseModel(), all_instances)
+
+    def test_Review_destroy(self):
+        """
+        testing Review.destroy() command
+        """
+        all_instances = Review.destroy()
+        self.assertIn(Review(), all_instances)
+
+    def test_User_destroy(self):
+        """
+        testing User.destroy() command
+        """
+        all_instances = User.destroy()
+        self.assertIn(User(), all_instances)
+        
+    def test_State_destroy(self):
+        """
+        testing destroy BaseModel command
+        """
+        all_instances = State.destroy()
+        self.assertIn(State(), all_instances)
+
+    def test_City_destroy(self):
+        """
+        testing destroy BaseModel command
+        """
+        all_instances = City.destroy()
+        self.assertIn(City(), all_instances)
+
+    def test_Amenity_destroy(Self):
+        """
+        testing destroy BaseModel command
+        """
+        all_instances = Amenity.destroy()
+        self.assertIn(Amenity(), all_instances)
+
+    def test_Place_destroy(self):
+        """
+        testing destroy BaseModel command
+        """
+        all_instances = Place.destroy()
+        self.assertIn(Place(), all_instances)
+        
     def test_BaseModel_update(self):
         """
         testing BaseModel.update() commandd
